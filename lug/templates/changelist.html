@@ -7,17 +7,29 @@
     <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
 </head>
 <body>
-<table class="table table-bordered">
-    <thead></thead>
-    <tbody>
+<div class="container">
+    <h1>列表页面</h1>
+    {% if show_add_btn %}
+        <div><a href="{{ add_url }}" class="btn btn-primary">添加</a></div>
+    {% endif %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            {% for head in head_list %}
+                <th>{{ head }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
         {% for item in data_list %}
             <tr>
-            {% for col in item %}
-                <td>{{ col }}</td>
-            {% endfor %}
+                {% for col in item %}
+                    <td>{{ col }}</td>
+                {% endfor %}
             </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

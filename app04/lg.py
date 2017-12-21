@@ -36,6 +36,7 @@ class UserInfoConfig(lg.LgConfig):
         lg.FilterOption('roles')
     ]
 
+    show_add_btn = True
     show_action = True
 
     search_fields = ['name__contains', 'email__contains']

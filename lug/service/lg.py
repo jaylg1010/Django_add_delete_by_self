@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.forms import ModelForm
 from django.http import QueryDict
 from django.db.models import Q
+import json
 import copy
 
 # 组合筛选的条件类
@@ -396,14 +397,19 @@ class LgConfig(object):
     # 增加视图函数
     def add_view(self, request, *args, **kwargs):
         model_form_class = self.get_model_form_class()
+        _popbackid = request.GET.get('_popbackid')
         if request.method == "GET":
             form = model_form_class()
             return render(request, "add_view.html", {"form": form})
         else:
             form = model_form_class(request.POST)
             if form.is_valid():
-                form.save()
-                return redirect(self.get_list_url())
+                new_obj=form.save()
+                if _popbackid:
+                    result = {'id':new_obj.pk,'text':str(new_obj),'popbackid':_popbackid}
+                    return render(request,'popup_response.html',{'json_result':json.dumps(result,ensure_ascii=False)})
+                else:
+                    return redirect(self.get_list_url())
             return render(request, 'add_view.html', {"form": form})
 
     # 删除视图函数

@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from lug.service import lg
+from app03 import views as app03_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^lug/', lg.site.urls),
+    url(r'^hosts/', app03_views.hosts),
 ]
